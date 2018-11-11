@@ -1,0 +1,33 @@
+/*
+Samsung Delhi IITD 2018
+Initially you have H amount of energy and D distance to travel. You may travel
+with any of the given 5 speeds. But you may only travel in units of 1 km. For 
+each km distance traveled, you will spend corresponding amount of energy.
+e.g. the given speeds are:
+Cost of traveling 1 km: [4, 5, 2, 3, 6]
+Time taken to travel 1 km: [200, 210, 230, 235, 215]
+Find minimum time required to cover total D km with remaining H >= 0
+1 <= H <= 4000
+1 <= D <= 1000
+*/
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int dp[4004][1010][5];
+int getMinTime(int energy,int distance,int pos,vector<int> cost,vector<int> timee){
+    if(energy<0) return INT_MAX/2;
+    if(distance==0) return 0;
+    if(pos<0) return INT_MAX/2;
+    if(dp[energy][distance][pos]!=-1 ) return dp[energy][distance][pos];
+    return dp[energy][distance][pos]=min(getMinTime(energy,distance,pos-1,cost,timee),timee[pos]+getMinTime(energy-cost[pos],distance-1,pos,cost,timee));
+}
+int main() {
+    memset(dp, -1, sizeof dp);
+    int t=14;
+    vector<int> cost {4, 5, 2, 3, 6};
+    vector<int> timee {200, 210, 230, 235, 215};
+    int D=4;
+    cout << getMinTime(t,4,4,cost,timee);
+    return 0;
+}
