@@ -1,0 +1,43 @@
+/* You are given  queries. Each query consists of a single number . You can perform any of the  operations on  in each move:
+
+1: If we take 2 integers  and  where , , then we can change 
+
+2: Decrease the value of  by .
+
+Determine the minimum number of moves required to reduce the value of  to .
+
+Input Format
+
+The first line contains the integer . 
+The next  lines each contain an integer, .
+
+Output Format
+
+Output  lines. Each line containing the minimum number of moves required to reduce the value of  to .
+*/
+
+int downToZero(int n) {
+    vector<int> dp(n+1,-1);
+    dp[n]=0;
+    queue<int> q;
+    q.push(n);
+    while(!q.empty()){
+        int t=q.front();
+        q.pop();
+        if(dp[t-1]== -1){
+            dp[t-1]=dp[t]+1;
+            if(t-1==0) break;
+            q.push(t-1);
+        }
+        for(int i=2;i*i<=t;i++){
+            if(t%i==0){
+                int newn=max(i,t/i);
+                if(dp[newn]== -1){
+                    dp[newn]=dp[t]+1;
+                    q.push(newn);
+                }
+            }
+        }
+    }
+    return dp[0];
+}
