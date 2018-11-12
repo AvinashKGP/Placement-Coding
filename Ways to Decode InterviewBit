@@ -1,0 +1,15 @@
+// IIT DELHI PHONE PE QUESTION
+
+int Solution::numDecodings(string A) {
+    vector<int> dp(A.length()+1,0);
+    if(A[0]=='0') return 0;
+    else if(A.size()==1 ) return 1;
+    A.insert(A.begin(),'0');
+    dp[1]=1; dp[0]=1;
+    for(int i=2;i<A.length();i++){
+        if(A[i]>'0')dp[i]=dp[i-1];
+        if(A[i]=='0' && A[i-1] >'2') return 0;
+        if((A[i-1] =='1') || (A[i-1]=='2' && A[i]<'7') ) dp[i]=dp[i]+dp[i-2];
+    }
+    return dp[A.length()-1];
+}
