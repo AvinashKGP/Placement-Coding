@@ -1,0 +1,39 @@
+/*
+IITR Flipkart 2018
+Given a string s, return a string t satisfying the following:
+1. s contains t
+2. t is a palindrome
+3. t is largest possible
+If multiple t exists, return the lexicographically smallest t.
+1 <= |s| <= 100000
+O(|s| + 26)
+*/
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    string s="aabbbccddd";
+    map<char,int> mp;
+    for(auto ele:s) mp[ele]++;
+    string t="";
+    for(auto ele:mp) {
+        for(int i=1;i<=ele.second/2;i++){
+            t.push_back(ele.first);
+        }
+    }
+    int flago=1;
+    for(auto ele:mp) {
+        if(ele.second%2!=0) {
+            flago=1;
+            t.push_back(ele.first);
+            break;
+        }
+    }
+    int run=(flago==1) ? t.length()-2 : t.length()-1;
+    for(int i=run;i>=0;i--){
+        t.push_back(t[i]);
+    }
+    cout<<t<<endl;
+}
